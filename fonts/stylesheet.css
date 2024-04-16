@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Grotesk';
+    src: url('GroteskLight.eot');
+    src: url('GroteskLight.eot?#iefix') format('embedded-opentype'),
+        url('GroteskLight.woff2') format('woff2'),
+        url('GroteskLight.woff') format('woff'),
+        url('GroteskLight.ttf') format('truetype'),
+        url('GroteskLight.svg#GroteskLight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
