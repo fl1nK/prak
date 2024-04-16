@@ -154,10 +154,8 @@ table {
 } */
 
 .form-container {
-    width: 500px;
+    width: 400px;
     margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
@@ -181,7 +179,7 @@ h2 {
 
 input[type="text"],
 input[type="email"] {
-    width: 398px;
+    width: 100%;
     height: 50px;
     border: 1px solid #848c9c;
     border-radius: 5px;
@@ -201,11 +199,12 @@ input[type="email" i] {
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    height: 50px;
+    margin-top: 10px;
+    background: #ececef;
+    color: #848c9c;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
