@@ -3,34 +3,74 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Моя форма</title>
+        <title>Моя сторінка</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div class="form-container">
-            <h2>Змінити пароль</h2>
-            <form action="#">
-                <div class="form-group">
-                    <!-- <label for="name">Ім'я:</label> -->
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Новий пароль"
-                    />
+        <div class="container">
+            <div class="left-section">
+                <div class="logo-back"></div>
+                <div class="logo">
+                    <!-- Ваш логотип тут -->
+                    <img src="images/logo.png" alt="Логотип" />
                 </div>
-                <div class="form-group">
-                    <!-- <label for="email">Email:</label> -->
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Повторіть новий пароль"
-                    />
+                <div class="logo-sign">
+                    <!-- Знак вашого логотипу тут -->
+                    <img src="images/logo-sign.svg" alt="Знак логотипу" />
                 </div>
-                <button type="submit">Зберегти</button>
-            </form>
-            <p class="small-text">Маленький текст нижче форми</p>
+            </div>
+            <div class="right-section">
+                <div class="form-container">
+                    <h2>Змінити пароль</h2>
+                    <form action="#">
+                        <div class="form-group">
+                            <label for="password" class="hidden"
+                                >Новий пароль</label
+                            >
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Новий пароль"
+                            />
+                            <div class="eye-icon"><div class="line"></div></div>
+                        </div>
+                        <ul id="passwordCriteria">
+                            <li>Мінімум 8 символів</li>
+                            <li>Мінімум одна велика літера</li>
+                            <li>Мінімум одна маленька літера</li>
+                            <li>Мінімум одна цифра</li>
+                            <li>Мінімум один спецсимвол</li>
+                        </ul>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="hidden"
+                                >Повторіть новий пароль</label
+                            >
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Повторіть новий пароль"
+                            />
+                            <div class="eye-icon">
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                        <p id="passwordMatchError">Паролі не співпадають.</p>
+                        <button id="submitButton" type="submit">
+                            Зберегти
+                        </button>
+                    </form>
+                    <p class="small-text">
+                        Якщо у вас виникли проблеми під час зміни пароля,
+                        зверніться до служби технічної підтримки Service Desk:
+                        <span> +380993546464, sd@kovalska.com.</span>
+                    </p>
+                </div>
+            </div>
         </div>
     </body>
+
+    <script src="script.js"></script>
 </html>
