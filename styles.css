@@ -147,8 +147,7 @@ body {
 
 .container {
     display: flex;
-    flex-wrap: wrap;
-
+    flex-wrap: wrap-reverse;
     height: 100vh;
 }
 
@@ -186,8 +185,36 @@ body {
 }
 
 .logo-sign img {
-    /* width: 50px; */
+    width: 100%;
     height: auto;
+}
+
+@media screen and (max-width: 1335px) {
+    .logo {
+        padding: 50px;
+    }
+
+    .logo-sign {
+        padding: 50px;
+    }
+
+    .logo-sign img {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .logo {
+        padding: 25px;
+    }
+
+    .logo-sign {
+        padding: 25px;
+    }
+
+    .logo-sign img {
+        width: 100px;
+    }
 }
 
 .right-section {
@@ -200,6 +227,20 @@ body {
 .form-container {
     width: 400px;
     /* border: 1px solid #000000; */
+}
+
+@media screen and (max-width: 1335px) {
+    .form-container {
+        width: 100%;
+        margin: 170px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .form-container {
+        width: 100%;
+        margin: 20px;
+    }
 }
 
 h2 {
@@ -251,7 +292,7 @@ label {
 
 input:focus {
     outline: 0;
-    border: 1px solid #000000; /* Додати рамку при отриманні фокусу */
+    border: 1px solid #000000;
 }
 
 .eye-icon {
