@@ -1,37 +1,42 @@
-// Отримуємо всі елементи input відповідно до їх типу
 const inputs = document.querySelectorAll("input")
+const passwordInput = document.getElementById("password")
+const confirmPasswordInput = document.getElementById("confirmPassword")
+const passwordCriteriaList = document.getElementById("passwordCriteria")
+const passwordMatchError = document.getElementById("passwordMatchError")
+const submitButton = document.getElementById("submitButton")
+const label = confirmPasswordInput.parentElement.querySelector("label")
 
-// Перебираємо кожен елемент input і додаємо до нього прослуховувач події введення
+var firstCheck = false
+var secondCheck = false
+
+submitButton.disabled = true
+
+// Перевірка полів на наявність значення
 inputs.forEach((input) => {
     const label = input.parentElement.querySelector("label")
 
     input.addEventListener("input", function () {
         if (this.value.trim() !== "") {
-            label.classList.remove("hidden") // Видалити клас "hidden", якщо введено значення
+            label.classList.remove("hidden")
         } else {
-            label.classList.add("hidden") // Додати клас "hidden", якщо значення видалено
+            label.classList.add("hidden")
         }
     })
 })
 
-// Отримуємо елементи ока
+// Зміна типу поля паролю та відображення / приховування іконки ока
 const eyeIcons = document.querySelectorAll(".eye-icon")
 
-// Перебираємо кожен елемент ока і додаємо прослуховувач події кліку
 eyeIcons.forEach((icon) => {
     icon.addEventListener("click", function () {
-        // Отримуємо поле вводу, пов'язане з цією іконкою
         const inputField = this.previousElementSibling
 
-        // Змінюємо тип поля вводу з "password" на "text" або навпаки
         const newType =
             inputField.getAttribute("type") === "password" ? "text" : "password"
         inputField.setAttribute("type", newType)
 
-        // Отримуємо елемент .line, пов'язаний з цим полем вводу
         const line = this.querySelector(".line")
 
-        // Видаляємо або додаємо клас "hidden" в залежності від наявності класу
         if (line.classList.contains("hidden")) {
             line.classList.remove("hidden")
         } else {
@@ -40,19 +45,27 @@ eyeIcons.forEach((icon) => {
     })
 })
 
-const passwordInput = document.getElementById("password")
-const passwordCriteriaList = document.getElementById("passwordCriteria")
-
-var firstCheck = false
-
+// Перевірка на помилки пароля при введенні
 passwordInput.addEventListener("input", function () {
-    const password = this.value
+    validatePassword(this.value)
+    checkSamePasswords()
+    checkFields()
+})
+
+// Перевірка на помилки підтвердження пароля при введенні
+confirmPasswordInput.addEventListener("input", function () {
+    checkSamePasswords()
+    checkFields()
+})
+
+// Функція для перевірки вимог до пароля
+function validatePassword(password) {
     const criteria = [
         password.length >= 8,
-        /[A-Z]/.test(password),
-        /[a-z]/.test(password),
-        /\d/.test(password),
-        /[!@#$%^&*()_+]/.test(password),
+        /[A-ZА-ЯІЇЄҐ]/.test(password), // Перевірка на великі українські букви
+        /[a-zа-яіїєґ]/.test(password), // Перевірка на малі українські букви
+        /\d/.test(password), // Перевірка на наявність цифр
+        /[!@#$%^&*()_+]/.test(password), // Перевірка на наявність спеціальних символів
     ]
 
     criteria.forEach((criterion, index) => {
@@ -66,47 +79,50 @@ passwordInput.addEventListener("input", function () {
 
     if (criteria.every((criterion) => criterion) || password.length == 0) {
         passwordCriteriaList.style.display = "none"
-        firstCheck = true
+        if (password.length != 0) {
+            firstCheck = true
+        }
     } else {
         passwordCriteriaList.style.display = "block"
     }
-})
+}
 
-const confirmPasswordInput = document.getElementById("confirmPassword")
-const passwordMatchError = document.getElementById("passwordMatchError")
-const submitButton = document.getElementById("submitButton")
-var secondCheck = false
-// Disable the button on initial page load
-submitButton.disabled = true
-
-confirmPasswordInput.addEventListener("input", function () {
-    const label = confirmPasswordInput.parentElement.querySelector("label")
-
+// Функція для перевірки чи однакові паролі
+function checkSamePasswords() {
     const password = passwordInput.value
-    const confirmPassword = this.value
+    const confirmPassword = confirmPasswordInput.value
 
-    if (password == confirmPassword || confirmPassword.length == 0) {
+    if (password == confirmPassword || confirmPassword == 0) {
         passwordMatchError.style.display = "none"
         confirmPasswordInput.classList.remove("bred")
         label.classList.remove("red")
-        this.style.borderColor = ""
-        secondCheck = true
+        confirmPasswordInput.style.borderColor = ""
+
+        if (confirmPassword.length != 0) {
+            secondCheck = true
+        }
     } else {
         passwordMatchError.style.display = "block"
         confirmPasswordInput.classList.add("bred")
         label.classList.add("red")
-        this.style.borderColor = "red"
+        confirmPasswordInput.style.borderColor = "red"
         secondCheck = false
     }
+}
+
+// Функція для перевірки стану полів і активації / деактивації кнопки
+function checkFields() {
+    console.log("firstCheck = " + firstCheck)
+    console.log("secondCheck = " + secondCheck)
 
     if (firstCheck && secondCheck) {
         submitButton.disabled = false
-        submitButton.classList.add("button-enabled")
+        // submitButton.classList.add("button-enabled")
     } else {
         submitButton.disabled = true
-        submitButton.classList.remove("button-enabled")
+        // submitButton.classList.remove("button-enabled")
     }
-})
+}
 
 submitButton.addEventListener("click", function (event) {
     alert("Enabled!")
