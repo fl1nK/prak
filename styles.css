@@ -232,26 +232,6 @@ input {
     caret-color: #e73027;
 }
 
-.eye-icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-.line {
-    position: absolute;
-    width: 3.49px;
-    height: 28.49px;
-    background: #848c9c;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-49.28deg);
-    border: 1px solid #ffffff;
-    border-radius: 1px;
-}
-
 label {
     font-size: 12px;
     font-weight: 500;
@@ -274,13 +254,24 @@ input:focus {
     border: 1px solid #000000; /* Додати рамку при отриманні фокусу */
 }
 
-/* input:focus + .eye-icon {
-    background-image: url("images/eye-black.svg");
+.eye-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    fill: #848c9c;
+}
+input:focus + .eye-icon {
+    fill: #000000;
 }
 
-input:focus + .eye-icon .line {
-    background: #000000;
-} */
+input:focus + .eye-icon:hover {
+    fill: #e2554d;
+}
+.eye-icon:hover {
+    fill: #e2554d;
+}
 
 button {
     width: 100%;
