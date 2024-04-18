@@ -27,21 +27,20 @@ inputs.forEach((input) => {
 // Зміна типу поля паролю та відображення / приховування іконки ока
 const eyeIcons = document.querySelectorAll(".eye-icon")
 
-eyeIcons.forEach((icon) => {
+eyeIcons.forEach(function (icon) {
+    const useElement = icon.querySelector("use")
+    const inputField = icon.previousElementSibling
+
     icon.addEventListener("click", function () {
-        const inputField = this.previousElementSibling
+        if (useElement.getAttribute("href") === "#icon-eye-blind") {
+            useElement.setAttribute("href", "#icon-eye")
+        } else {
+            useElement.setAttribute("href", "#icon-eye-blind")
+        }
 
         const newType =
             inputField.getAttribute("type") === "password" ? "text" : "password"
         inputField.setAttribute("type", newType)
-
-        const line = this.querySelector(".line")
-
-        if (line.classList.contains("hidden")) {
-            line.classList.remove("hidden")
-        } else {
-            line.classList.add("hidden")
-        }
     })
 })
 
