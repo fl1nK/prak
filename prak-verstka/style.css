@@ -371,16 +371,7 @@ span {
     font-weight: 700;
 }
 
-#passwordCriteria {
-    display: none;
-    margin-top: 10px;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 12px;
-    padding-left: 20px;
-    color: #e73027;
-}
-
+#passwordCriteria,
 #passwordMatchError {
     display: none;
     margin-top: 10px;
@@ -388,6 +379,10 @@ span {
     font-weight: 500;
     line-height: 12px;
     color: #e73027;
+}
+
+#passwordCriteria {
+    padding-left: 20px;
 }
 
 .red {
