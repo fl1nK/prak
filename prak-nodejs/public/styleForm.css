@@ -390,7 +390,8 @@ span {
 }
 
 #passwordCriteria,
-#passwordMatchError {
+#passwordMatchError,
+#emailCriteria {
     display: none;
     margin-top: 10px;
     font-size: 10px;
@@ -399,7 +400,8 @@ span {
     color: #e73027;
 }
 
-#passwordCriteria {
+#passwordCriteria,
+#emailCriteria {
     padding-left: 20px;
 }
 

@@ -1,20 +1,34 @@
 const jwt = require("jsonwebtoken")
 const path = require("path")
 
-module.exports = (req, res, next) => {
+// Мідлвара для перевірки токену
+const checkToken = (req, res, next) => {
     try {
         const token = req.cookies.token
         if (!token) {
-            // res.status(401).json({ message: "Token not found" })
-            res.status(401).sendFile(
-                path.join(__dirname, "../public/errorAuth.html")
-            )
-        } else {
-            req.user = jwt.verify(token, process.env.SECRET_KEY)
-            next()
+            return res
+                .status(401)
+                .sendFile(path.join(__dirname, "../public/errorAuth.html"))
         }
-    } catch (e) {
-        console.log(e)
-        res.send({ message: "Server error" })
+        req.user = jwt.verify(token, process.env.SECRET_KEY)
+        next()
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ message: "Server error" })
     }
+}
+
+// Функція для перевірки наявності токену і редіректу
+const checkTokenAndRedirect = (redirectTo) => (req, res, next) => {
+    const token = req.cookies.token
+    if (token) {
+        res.redirect(redirectTo)
+    } else {
+        next()
+    }
+}
+
+module.exports = {
+    checkToken,
+    checkTokenAndRedirect,
 }

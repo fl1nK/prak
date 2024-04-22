@@ -9,7 +9,7 @@ const label = confirmPasswordInput.parentElement.querySelector("label")
 var firstCheck = false
 var secondCheck = false
 
-// submitButton.disabled = true
+submitButton.disabled = true
 
 // Перевірка полів на наявність значення
 inputs.forEach((input) => {
@@ -111,8 +111,8 @@ function checkSamePasswords() {
 
 // Функція для перевірки стану полів і активації / деактивації кнопки
 function checkFields() {
-    console.log("firstCheck = " + firstCheck)
-    console.log("secondCheck = " + secondCheck)
+    // console.log("firstCheck = " + firstCheck)
+    // console.log("secondCheck = " + secondCheck)
 
     if (firstCheck && secondCheck) {
         submitButton.disabled = false
@@ -123,7 +123,6 @@ function checkFields() {
 
 const formContainer = document.querySelector(".form-conteiner")
 const switchConteiner = document.querySelector(".switch-conteiner")
-console.log(formContainer)
 
 // submitButton.addEventListener("click", function (event) {
 //     formContainer.classList.toggle("hidden")

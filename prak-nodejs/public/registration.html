@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Реєстрація</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="styleForm.css" />
     </head>
     <body>
         <div class="container">
@@ -47,11 +47,12 @@
                                 placeholder="example@example.com"
                             />
                         </div>
+                        <ul id="emailCriteria">
+                            <li>Ел. пошта некоректна!</li>
+                        </ul>
 
                         <div class="form-group">
-                            <label for="confirmPassword" class="hidden"
-                                >Пароль</label
-                            >
+                            <label for="password" class="hidden">Пароль</label>
                             <input
                                 id="password"
                                 type="password"
@@ -62,6 +63,13 @@
                                 <use href="#icon-eye-blind"></use>
                             </svg>
                         </div>
+                        <ul id="passwordCriteria">
+                            <li>мінімум 8 символів</li>
+                            <li>мінімум одна велика літера</li>
+                            <li>мінімум одна маленька літера</li>
+                            <li>мінімум одна цифра</li>
+                            <li>мінімум один спецсимвол</li>
+                        </ul>
                         <button id="submitButton" type="submit">
                             Зареєструватися
                         </button>
@@ -130,5 +138,6 @@
             />
         </svg>
     </div>
-    <!-- <script src="script.js"></script> -->
+    <script src="checkAuthScript.js"></script>
+    <script src="checkTokenScript.js"></script>
 </html>

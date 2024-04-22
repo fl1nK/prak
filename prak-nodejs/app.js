@@ -7,7 +7,7 @@ const authRouter = require("./routers/authRouter.js")
 
 const app = express()
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 4650
 const MONGODB_URL = process.env.MONGODB_URL
 
 mongoose
