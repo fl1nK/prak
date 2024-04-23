@@ -15,6 +15,8 @@ mongoose
     .then(() => console.log("Connected to DB"))
     .catch((error) => console.log(error))
 
+app.set("view engine", "ejs")
+
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())

@@ -409,6 +409,10 @@ span {
     color: #e73027;
 }
 
+.green {
+    color: #00b309;
+}
+
 .bred {
     border: 1px solid #e73027;
 }
@@ -420,4 +424,10 @@ span {
 
 .switch {
     margin-bottom: 40px;
+}
+
+.message-server {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
 }

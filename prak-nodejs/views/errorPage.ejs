@@ -3,16 +3,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Помилка реєстрації</title>
+        <title><%= title %></title>
         <link rel="stylesheet" href="stylePage.css" />
     </head>
     <body>
         <div class="container">
             <div class="content-container">
-                <h1>Користувач з такою електроною адресою не існує!</h1>
+                <h1><%= content %></h1>
                 <p>
-                    Щоб авторизуватись перейдіть за
-                    <a href="/login">посиланням.</a>
+                    Щоб повторити спробу перейдіть за
+                    <a href="<%= redirect %>">посиланням.</a>
                 </p>
             </div>
         </div>

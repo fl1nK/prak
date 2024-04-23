@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
     res.redirect("/registration")
 })
 router.get("/registration", checkTokenAndRedirect("/home"), (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/registration.html"))
+    res.render("registration", { error: null })
 })
 
 router.post("/registration", async (req, res) => {
@@ -24,25 +24,19 @@ router.post("/registration", async (req, res) => {
     const candidate = await User.findOne({ email })
 
     if (candidate) {
-        return res
-            .status(400)
-            .sendFile(path.join(__dirname, "../public/errorRegistration.html"))
-
-        // return res.status(400).json({
-        //     message: `Користувач з такою ел. адресою ${email} всже існує!`,
-        // })
+        return res.status(400).render("registration", {
+            error: "Користувач з такою електроною адресою вже існує!",
+        })
     }
 
     const hashPassword = bcrypt.hashSync(password, 7)
     const user = new User({ email, password: hashPassword })
     await user.save()
     return res.redirect("/login")
-
-    // return res.json({ message: "Користувача було створено", redirect: "/login" })
 })
 
 router.get("/login", checkTokenAndRedirect("/home"), (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/login.html"))
+    res.render("login", { error: null })
 })
 
 router.post("/login", async (req, res) => {
@@ -51,19 +45,22 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            return res
-                .status(400)
-                .sendFile(path.join(__dirname, "../public/errorLogin.html"))
+            return res.status(400).render("login", {
+                error: "Користувач з такою електроною не існує!",
+            })
         }
 
         const isPassValid = bcrypt.compareSync(password, user.password)
         if (!isPassValid) {
-            return res.status(400).json({ message: "Невірний пароль" })
+            return res.status(400).render("login", {
+                error: "Пароль не вірний, повторіть спробу!",
+            })
         }
 
         const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
             expiresIn: "1h",
         })
+        res.cookie("username", email, { maxAge: 24 * 60 * 60 * 1000 })
         res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000 }) // 1 день в мілісекундах
         res.redirect("/home")
     } catch (e) {
@@ -73,7 +70,7 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/changePassword", checkToken, (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/changePassword.html"))
+    res.render("changePassword", { message: null })
 })
 
 router.post("/changePassword", checkToken, async (req, res) => {
@@ -90,26 +87,26 @@ router.post("/changePassword", checkToken, async (req, res) => {
     const hashPassword = bcrypt.hashSync(password, 7)
     await User.findByIdAndUpdate({ _id: userID }, { password: hashPassword })
 
-    // return res.json({
-    //     message: "Пароль змінено",
-    //     redirect: "/home",
-    // })
-
-    res.sendFile(path.join(__dirname, "../public/afterChangePassword.html"))
-})
-
-router.get("/getcookie", (req, res) => {
-    const token = req.cookies.token
-    res.json({ token: token })
+    res.render("changePassword", { message: "Пароль успішно змінено!" })
 })
 
 router.get("/home", checkToken, (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/home.html"))
+    const username = req.cookies.username
+    res.render("home", { username: username })
 })
 
 router.get("/out", checkToken, (req, res) => {
     res.clearCookie("token")
     res.redirect("/login")
+})
+
+router.get("/test", (req, res) => {
+    res.render("test", { title: "Test Express Page" })
+})
+
+router.get("/getcookie", (req, res) => {
+    const token = req.cookies.token
+    res.json({ token: token })
 })
 
 module.exports = router

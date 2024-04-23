@@ -1,14 +1,17 @@
 const jwt = require("jsonwebtoken")
 const path = require("path")
+const { title } = require("process")
 
 // Мідлвара для перевірки токену
 const checkToken = (req, res, next) => {
     try {
         const token = req.cookies.token
         if (!token) {
-            return res
-                .status(401)
-                .sendFile(path.join(__dirname, "../public/errorAuth.html"))
+            return res.status(401).render("errorPage", {
+                title: "Помилка авторизації",
+                content: "Ви не авторизований користувач!",
+                redirect: "/login",
+            })
         }
         req.user = jwt.verify(token, process.env.SECRET_KEY)
         next()
