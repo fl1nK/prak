@@ -90,10 +90,12 @@ router.post("/changePassword", checkToken, async (req, res) => {
     const hashPassword = bcrypt.hashSync(password, 7)
     await User.findByIdAndUpdate({ _id: userID }, { password: hashPassword })
 
-    return res.json({
-        message: "Пароль змінено",
-        redirect: "/home",
-    })
+    // return res.json({
+    //     message: "Пароль змінено",
+    //     redirect: "/home",
+    // })
+
+    res.sendFile(path.join(__dirname, "../public/afterChangePassword.html"))
 })
 
 router.get("/getcookie", (req, res) => {
