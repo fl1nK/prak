@@ -24,7 +24,7 @@ router.post("/registration", async (req, res) => {
     const candidate = await User.findOne({ email })
 
     if (candidate) {
-        return res.status(400).render("registration", {
+        return res.status(400).json({
             error: "Користувач з такою електроною адресою вже існує!",
         })
     }
@@ -32,7 +32,10 @@ router.post("/registration", async (req, res) => {
     const hashPassword = bcrypt.hashSync(password, 7)
     const user = new User({ email, password: hashPassword })
     await user.save()
-    return res.redirect("/login")
+
+    res.status(200).json({
+        message: "Користувача було успішно створено!",
+    })
 })
 
 router.get("/login", checkTokenAndRedirect("/home"), (req, res) => {
@@ -44,25 +47,19 @@ router.post("/login", async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email })
 
-        if (!user) {
-            return res.status(400).render("login", {
-                error: "Користувач з такою електроною не існує!",
-            })
-        }
-
         const isPassValid = bcrypt.compareSync(password, user.password)
-        if (!isPassValid) {
-            return res.status(400).render("login", {
-                error: "Пароль не вірний, повторіть спробу!",
+        if (!isPassValid || !user) {
+            return res.status(400).json({
+                error: "Невірниа ел. пошта чи пароль, повторіть спробу!",
             })
         }
 
         const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
             expiresIn: "1h",
         })
-        res.cookie("username", email, { maxAge: 24 * 60 * 60 * 1000 })
-        res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000 }) // 1 день в мілісекундах
-        res.redirect("/home")
+        res.cookie("username", email, { maxAge: 60 * 60 * 1000 })
+        res.cookie("token", token, { maxAge: 60 * 60 * 1000 }) // 1 день в мілісекундах
+        res.json({ message: "Користувач успішно авторизований!" })
     } catch (e) {
         console.log(e)
         res.send({ message: "Server error" })
@@ -81,13 +78,13 @@ router.post("/changePassword", checkToken, async (req, res) => {
     const userID = decodedToken.id
 
     if (password != confirmPassword) {
-        return res.json({ message: "Паролі не співпадають!" })
+        return res.status(400).json({ message: "Паролі не співпадають!" })
     }
 
     const hashPassword = bcrypt.hashSync(password, 7)
     await User.findByIdAndUpdate({ _id: userID }, { password: hashPassword })
 
-    res.render("changePassword", { message: "Пароль успішно змінено!" })
+    res.status(400).json({ message: "Пароль успішно змінено!" })
 })
 
 router.get("/home", checkToken, (req, res) => {
@@ -97,11 +94,18 @@ router.get("/home", checkToken, (req, res) => {
 
 router.get("/out", checkToken, (req, res) => {
     res.clearCookie("token")
+    res.clearCookie("username")
     res.redirect("/login")
 })
 
 router.get("/test", (req, res) => {
-    res.render("test", { title: "Test Express Page" })
+    // res.json({ message: "Test message" })
+    res.render("test")
+})
+
+router.post("/test", (req, res) => {
+    const { name } = req.body
+    res.json({ message: `Дані успішно отримані: ${name}` })
 })
 
 router.get("/getcookie", (req, res) => {

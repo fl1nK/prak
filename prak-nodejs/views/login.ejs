@@ -28,7 +28,7 @@
                             <a href="/registration">Реєстрація</a>
                         </li>
                         <li>
-                            <a href="/login">Логін</a>
+                            <a class="b-gray" href="/login">Логін</a>
                         </li>
                         <li>
                             <a href="/out">Вийти</a>
@@ -37,8 +37,8 @@
                 </div>
                 <div class="form-container">
                     <h2>Авторизація</h2>
-                    <div class="message-server red"><%= error %></div>
-                    <form action="/login" method="post">
+                    <div class="message-server"></div>
+                    <form id="login-form">
                         <div class="form-group">
                             <label for="email" class="hidden">Ел. пошта</label>
                             <input
@@ -48,9 +48,6 @@
                                 placeholder="example@example.com"
                             />
                         </div>
-                        <ul id="emailCriteria">
-                            <li>Ел. пошта некоректна!</li>
-                        </ul>
 
                         <div class="form-group">
                             <label for="password" class="hidden">Пароль</label>
@@ -64,13 +61,6 @@
                                 <use href="#icon-eye-blind"></use>
                             </svg>
                         </div>
-                        <ul id="passwordCriteria">
-                            <li>мінімум 8 символів</li>
-                            <li>мінімум одна велика літера</li>
-                            <li>мінімум одна маленька літера</li>
-                            <li>мінімум одна цифра</li>
-                            <li>мінімум один спецсимвол</li>
-                        </ul>
                         <button id="submitButton" type="submit">
                             Авторизація
                         </button>
@@ -139,6 +129,7 @@
             />
         </svg>
     </div>
-    <script src="checkAuthScript.js"></script>
+
+    <script src="checkLoginScript.js"></script>
     <script src="checkTokenScript.js"></script>
 </html>

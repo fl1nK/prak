@@ -1,9 +1,11 @@
+<% let message = null %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= title %></title>
+        <title>test</title>
         <link rel="stylesheet" href="stylePage.css" />
     </head>
     <body>
@@ -25,7 +27,14 @@
                 </ul>
             </div>
             <div class="content-container">
-                <h1>Вітаємо на тестовій сторінці ;)</h1>
+                <form id="myForm">
+                    <label for="name">Ім'я:</label>
+                    <input type="text" id="name" name="name" /><br /><br />
+
+                    <button type="submit">Відправити</button>
+                </form>
+                <div id="data-container"></div>
+                <h1>Вітаємо <%= message %> на тестовій сторінці ;)</h1>
                 <p>
                     Можете змінити пароль, натиснувши на
                     <a href="/home">посиланя.</a>
@@ -33,5 +42,40 @@
             </div>
         </div>
     </body>
+    <script>
+        // Обробник події submit форми
+        document
+            .getElementById("myForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault() // Перешкоджаємо дійсному відправленню форми
+
+                // Отримуємо дані з форми
+                const formData = new FormData(this)
+
+                // Виконуємо запит POST
+                fetch("/test", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json", // Встановлюємо заголовок Content-Type
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData)), // Конвертуємо дані форми в JSON
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(
+                                "Помилка від сервера: " + response.status
+                            )
+                        }
+                        return response.json()
+                    })
+                    .then((data) => {
+                        document.getElementById("data-container").textContent =
+                            data.message
+                    })
+                    .catch((error) => {
+                        console.error("Помилка: ", error)
+                    })
+            })
+    </script>
     <script src="checkTokenScript.js"></script>
 </html>

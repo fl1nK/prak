@@ -240,6 +240,12 @@ body {
     text-decoration: none;
     color: #000000;
     padding: 5px;
+    margin: 5px;
+    border-radius: 15px;
+}
+
+.b-gray {
+    background: #ebebeb;
 }
 
 .menu li a:hover {
@@ -418,6 +424,7 @@ span {
 }
 
 .switch-container {
+    margin: 20px;
     width: 400px;
     text-align: center;
 }

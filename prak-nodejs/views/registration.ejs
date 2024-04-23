@@ -25,7 +25,9 @@
                             <a href="/home">Головна</a>
                         </li>
                         <li>
-                            <a href="/registration">Реєстрація</a>
+                            <a class="b-gray" href="/registration"
+                                >Реєстрація</a
+                            >
                         </li>
                         <li>
                             <a href="/login">Логін</a>
@@ -37,8 +39,8 @@
                 </div>
                 <div class="form-container">
                     <h2>Реєстрація</h2>
-                    <div class="message-server red"><%= error %></div>
-                    <form action="/registration" method="post">
+                    <div class="message-server"></div>
+                    <form id="registration-form">
                         <div class="form-group">
                             <label for="email" class="hidden">Ел. пошта</label>
                             <input
@@ -112,7 +114,7 @@
                             />
                         </svg>
                     </div>
-                    <h2>Пароль успішно змінено</h2>
+                    <h2>Користувач зареєстрован!</h2>
                 </div>
             </div>
         </div>
@@ -139,6 +141,6 @@
             />
         </svg>
     </div>
-    <script src="checkAuthScript.js"></script>
+    <script src="checkRegistrationScript.js"></script>
     <script src="checkTokenScript.js"></script>
 </html>

@@ -104,9 +104,6 @@ function validatePassword(password) {
 
 // Функція для перевірки стану полів і активації / деактивації кнопки
 function checkFields() {
-    // console.log("firstCheck = " + firstCheck)
-    // console.log("secondCheck = " + secondCheck)
-
     if (firstCheck && secondCheck) {
         submitButton.disabled = false
     } else {
@@ -114,11 +111,47 @@ function checkFields() {
     }
 }
 
-const formContainer = document.querySelector(".form-conteiner")
-const switchConteiner = document.querySelector(".switch-conteiner")
+//POST Запрос з форми
+const formContainer = document.querySelector(".form-container")
+const switchConteiner = document.querySelector(".switch-container")
+const messageServer = document.querySelector(".message-server")
 
-// submitButton.addEventListener("click", function (event) {
-//     formContainer.classList.toggle("hidden")
-//     switchConteiner.classList.toggle("hidden")
-//     event.preventDefault()
-// })
+document
+    .getElementById("registration-form")
+    .addEventListener("submit", function (event) {
+        event.preventDefault()
+
+        const formData = new FormData(this)
+
+        fetch("/registration", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+        })
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                if (data.error) {
+                    messageServer.textContent = data.error
+                    messageServer.classList.add("red")
+                    messageServer.classList.remove("green")
+                } else if (data.message) {
+                    messageServer.textContent = data.message
+                    messageServer.classList.remove("red")
+                    messageServer.classList.add("green")
+
+                    formContainer.classList.toggle("hidden")
+                    switchConteiner.classList.toggle("hidden")
+
+                    setTimeout(function () {
+                        window.location.href = "/home"
+                    }, 5000)
+                }
+            })
+            .catch((error) => {
+                console.error("Помилка: ", error)
+            })
+    })
