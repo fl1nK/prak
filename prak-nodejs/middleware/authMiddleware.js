@@ -7,11 +7,9 @@ const checkToken = (req, res, next) => {
     try {
         const token = req.cookies.token
         if (!token) {
-            return res.status(401).render("errorPage", {
-                title: "Помилка авторизації",
-                content: "Ви не авторизований користувач!",
-                redirect: "/login",
-            })
+            return res
+                .status(401)
+                .sendFile(path.join(__dirname, "../public/errorPage.html"))
         }
         req.user = jwt.verify(token, process.env.SECRET_KEY)
         next()

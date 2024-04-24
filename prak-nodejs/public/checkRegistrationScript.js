@@ -147,7 +147,7 @@ document
                     switchConteiner.classList.toggle("hidden")
 
                     setTimeout(function () {
-                        window.location.href = "/home"
+                        window.location.href = "/login"
                     }, 5000)
                 }
             })

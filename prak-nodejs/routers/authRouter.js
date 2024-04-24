@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
     res.redirect("/registration")
 })
 router.get("/registration", checkTokenAndRedirect("/home"), (req, res) => {
-    res.render("registration", { error: null })
+    res.sendFile(path.join(__dirname, "../public/registration.html"))
 })
 
 router.post("/registration", async (req, res) => {
@@ -39,7 +39,7 @@ router.post("/registration", async (req, res) => {
 })
 
 router.get("/login", checkTokenAndRedirect("/home"), (req, res) => {
-    res.render("login", { error: null })
+    res.sendFile(path.join(__dirname, "../public/login.html"))
 })
 
 router.post("/login", async (req, res) => {
@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/changePassword", checkToken, (req, res) => {
-    res.render("changePassword", { message: null })
+    res.sendFile(path.join(__dirname, "../public/changePassword.html"))
 })
 
 router.post("/changePassword", checkToken, async (req, res) => {
@@ -88,8 +88,7 @@ router.post("/changePassword", checkToken, async (req, res) => {
 })
 
 router.get("/home", checkToken, (req, res) => {
-    const username = req.cookies.username
-    res.render("home", { username: username })
+    res.sendFile(path.join(__dirname, "../public/home.html"))
 })
 
 router.get("/out", checkToken, (req, res) => {
@@ -99,18 +98,12 @@ router.get("/out", checkToken, (req, res) => {
 })
 
 router.get("/test", (req, res) => {
-    // res.json({ message: "Test message" })
-    res.render("test")
+    res.sendFile(path.join(__dirname, "../public/test.html"))
 })
 
 router.post("/test", (req, res) => {
     const { name } = req.body
     res.json({ message: `Дані успішно отримані: ${name}` })
-})
-
-router.get("/getcookie", (req, res) => {
-    const token = req.cookies.token
-    res.json({ token: token })
 })
 
 module.exports = router
